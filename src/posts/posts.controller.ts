@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -16,8 +17,17 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto) {
+    const data = {
+      title: createPostDto.title,
+      body: createPostDto.body,
+      tag: createPostDto.tag,
+    };
+    await this.postsService.create(data);
+    return {
+      message: HttpStatus.OK,
+      data: createPostDto,
+    };
   }
 
   @Get()
@@ -31,8 +41,15 @@ export class PostsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    const data = {
+      title: updatePostDto.title,
+    };
+    await this.postsService.update(+id, data);
+    return {
+      message: HttpStatus.OK,
+      data: updatePostDto,
+    };
   }
 
   @Delete(':id')

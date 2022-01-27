@@ -14,7 +14,7 @@ export class PostsService {
   ) {}
 
   create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+    return this.postsRepository.insert(createPostDto);
   }
 
   findAll(): Promise<Post[]> {
@@ -26,7 +26,7 @@ export class PostsService {
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+    return this.postsRepository.update(id, updatePostDto);
   }
 
   remove(id: number) {

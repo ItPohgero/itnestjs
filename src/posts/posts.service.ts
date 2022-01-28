@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PostsService {
@@ -17,8 +18,8 @@ export class PostsService {
     return this.postsRepository.insert(createPostDto);
   }
 
-  findAll(): Promise<Post[]> {
-    return this.postsRepository.find();
+  async findAll(): Promise<Post[]> {
+    return await this.postsRepository.find();
   }
 
   findOne(id: number): Promise<Post> {

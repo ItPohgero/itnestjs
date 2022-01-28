@@ -1,5 +1,6 @@
 export class CreatePostDto {
   title: string;
   body: string;
-  tag: string;
+  author: string;
+  status: boolean;
 }
